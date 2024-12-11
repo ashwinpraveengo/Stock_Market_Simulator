@@ -49,12 +49,13 @@ void show_main_menu() {
 void show_user_menu(int user_id) {
     printf("\n%s=== User Menu ===%s\n", CYAN, RESET_COLOR);
     printf("%s1. View Portfolio%s\n", GREEN, RESET_COLOR);
-    printf("%s2. Buy Stocks%s\n", GREEN, RESET_COLOR);
-    printf("%s3. Sell Stocks%s\n", GREEN, RESET_COLOR);
-    printf("%s4. View Transaction History%s\n", GREEN, RESET_COLOR);
-    printf("%s5. Fetch Stock Price%s\n", GREEN, RESET_COLOR);
-    printf("%s6. View Leaderboard%s\n", GREEN, RESET_COLOR);
-    printf("%s7. Logout%s\n", RED, RESET_COLOR);
+    printf("%s2. Display Stocks%s\n", GREEN, RESET_COLOR);
+    printf("%s3. Buy Stocks%s\n", GREEN, RESET_COLOR);
+    printf("%s4. Sell Stocks%s\n", GREEN, RESET_COLOR);
+    printf("%s5. View Transaction History%s\n", GREEN, RESET_COLOR);
+    printf("%s6. Fetch Stock Price%s\n", GREEN, RESET_COLOR);
+    printf("%s7. View Leaderboard%s\n", GREEN, RESET_COLOR);
+    printf("%s8. Logout%s\n", RED, RESET_COLOR);
     printf("%sChoose an option: %s", YELLOW, RESET_COLOR);
 }
 
@@ -113,15 +114,17 @@ int main() {
                         show_user_menu(user_id);
                         scanf("%d", &user_choice);
                         getchar();
-                        if (user_choice == 7) {
-                            printf("Logging out...\n");
+                        if (user_choice == 8) {
+                            printf("%sLogging out...%s\n", RED, RESET_COLOR);
                             break;
                         }
                         switch (user_choice) {
                             case 1:
                                 view_portfolio(user_id);
                                 break;
-                            case 2: {
+                            case 2:
+                                fetch_stock_details("US");
+                            case 3: {
                                 char symbol[10];
                                 int quantity;
                                 printf("Enter stock symbol to buy (e.g., AAPL): ");
@@ -140,7 +143,7 @@ int main() {
                                 }
                                 break;
                             }
-                            case 3: {
+                            case 4: {
                                 char symbol[10];
                                 int quantity;
                                 printf("Enter stock symbol to sell (e.g., AAPL): ");
@@ -159,10 +162,10 @@ int main() {
                                 }
                                 break;
                             }
-                            case 4:
+                            case 5:
                                 view_transactions(user_id);
                                 break;
-                            case 5: {
+                            case 6: {
                                 char symbol[10];
                                 printf("Enter stock symbol (e.g., AAPL): ");
                                 fgets(symbol, sizeof(symbol), stdin);
@@ -176,7 +179,7 @@ int main() {
                                 }
                                 break;
                             }
-                            case 6:
+                            case 7:
                                 view_leaderboard();
                                 break;
                             default:
