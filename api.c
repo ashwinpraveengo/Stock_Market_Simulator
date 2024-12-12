@@ -81,6 +81,7 @@ int fetch_stock_details(const char *exchange) {
 
     printf("Available Stocks:\n");
     int count = 0;
+    printf("\nSymbol \t| Price \n-------------------\n");
     for (cJSON *item = json->child; item != NULL && count < 15; item = item->next) {
         cJSON *symbol = cJSON_GetObjectItem(item, "symbol");
         if (symbol && cJSON_IsString(symbol)) {
@@ -88,7 +89,7 @@ int fetch_stock_details(const char *exchange) {
             if (fetch_stock_price(symbol->valuestring, &price) == 0) {
                 if (price != 0.00){
 
-                printf("\nSymbol \tPrice \n%s \t$%.2f\n-----------------------", symbol->valuestring, price);
+                printf("%s \t| $%.2f\n", symbol->valuestring, price);
                 }
             }
         count++;
