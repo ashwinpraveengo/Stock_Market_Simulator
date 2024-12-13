@@ -1,16 +1,3 @@
-[11:01, 12/13/2024] GO: # Stock Market Simulator 📈💰
-
-## Project Description
-The *Stock Market Simulator* is a lightweight and interactive application designed for simulating real-time stock trading. With this simulator, users can trade stocks using virtual cash, track their portfolio performance, view transaction history, and compete with others on a global leaderboard. The application integrates with the *Finnhub API* to fetch real-time stock prices and news updates, while using *SQLite* for data storage to ensure smooth and efficient operations.
-
-Whether you're learning about stock trading or just want to have some fun, this simulator offers a simple yet powerful experience!
-
-## Technologies Used ⚙️
-- *Programming Language:* C
-- *Database:* SQLite
-- *Networking Library:* libcurl
-- …
-[11:02, 12/13/2024] GO: markdown
 # Stock Market Simulator 📈💰
 
 ## Project Description
@@ -142,8 +129,7 @@ Whether you're learning about stock trading or just want to have some fun, this 
 
 ## Contact Information 📬
 For any queries or suggestions, feel free to reach out:
-- **Email:** [your-email@example.com]
-- **GitHub:** [your-github-profile]
+- **Email:** [ghansyaaam@gmail.com]
 
 ## License Information 📜
 This project is licensed under the MIT License. See the LICENSE file for more details.
