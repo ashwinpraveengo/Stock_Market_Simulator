@@ -3,6 +3,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <openssl/sha.h>
+#define RED "\033[31m"
+#define GREEN "\033[32m"
+#define RESET_COLOR "\033[0m"
 
 void hash_password(const char *password, char *hashed_password) {
     unsigned char hash[SHA256_DIGEST_LENGTH];
@@ -34,7 +37,6 @@ int signup(const char *username, const char *password) {
 
     int rc = sqlite3_step(stmt);
     if (rc != SQLITE_DONE) {
-        fprintf(stderr, "Failed to execute statement: %s\n", sqlite3_errmsg(db));
         sqlite3_finalize(stmt);
         close_database(db);
         return -1;
@@ -42,9 +44,9 @@ int signup(const char *username, const char *password) {
 
     sqlite3_finalize(stmt);
     close_database(db);
-    printf("Signup successful! Nw you can login with username and password\n");
     return 0;
 }
+
 
 int login(const char *username, const char *password, int *user_id) {
     sqlite3 *db = open_database();
@@ -68,12 +70,12 @@ int login(const char *username, const char *password, int *user_id) {
     int rc = sqlite3_step(stmt);
     if (rc == SQLITE_ROW) {
         *user_id = sqlite3_column_int(stmt, 0);
-        printf("Login successful!\n");
+        printf("%sLogin successful!%s\n", GREEN, RESET_COLOR);
         sqlite3_finalize(stmt);
         close_database(db);
         return 0;
     } else {
-        printf("Invalid username or password.\n");
+        printf("%sInvalid username or password.%s\n", RED, RESET_COLOR);
         sqlite3_finalize(stmt);
         close_database(db);
         return -1;
