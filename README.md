@@ -61,3 +61,36 @@ Whether you're learning about stock trading or just want to have some fun, this 
 |----------------|---------|---------------------------------|
 | user_id        | INTEGER | Reference to the user.          |
 | net_worth      | REAL    | Cash balance + portfolio value. |
+
+## Installation Instructions 🛠️
+
+### Step 1: Set Up Your Environment
+1. **Install a C Compiler:**
+   - **Linux/macOS:** `gcc`
+   - **Windows:** MinGW or an IDE like Code::Blocks.
+
+2. **Install SQLite:**
+   - **Linux:** `sudo apt install sqlite3 libsqlite3-dev`
+   - **Windows:** Download precompiled binaries from the [SQLite Downloads page](https://sqlite.org/download.html).
+
+3. **Install libcurl:**
+   - **Linux:** `sudo apt install libcurl4-openssl-dev`
+   - **Windows:** Download and include libcurl headers and libraries.
+
+4. **Install cJSON:**
+   - Download `cJSON.c` and `cJSON.h` from the [cJSON GitHub repository](https://github.com/DaveGamble/cJSON).
+
+### Step 2: Set Up the Project
+1. Create a project directory with the following structure:
+   ```plaintext
+   stock_simulator/
+   ├── main.c
+   ├── database.c
+   ├── database.h
+   ├── api.c
+   ├── api.h
+   ├── auth.c
+   ├── auth.h
+   ├── sqlite3.c
+   ├── cJSON.c
+   ├── Makefile
