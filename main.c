@@ -55,7 +55,8 @@ void show_user_menu(int user_id) {
     printf("%s5. View Transaction History%s\n", GREEN, RESET_COLOR);
     printf("%s6. Fetch Stock Price%s\n", GREEN, RESET_COLOR);
     printf("%s7. View Leaderboard%s\n", GREEN, RESET_COLOR);
-    printf("%s8. Logout%s\n", RED, RESET_COLOR);
+    printf("%s8. View Profile%s\n", GREEN, RESET_COLOR);
+    printf("%s9. Logout%s\n", RED, RESET_COLOR);
     printf("%sChoose an option: %s", YELLOW, RESET_COLOR);
 }
 
@@ -92,9 +93,10 @@ int main() {
                 }
 
                 if (signup(username, password) != 0) {
-                    printf("Signup failed. Username might already exist.\n");
-                } else {
-                    printf("Signup successful! You can now log in.\n");
+                    printf("%sSignup failed: Username '%s' is already taken. Please choose a different username.%s\n", RED, username, RESET_COLOR);
+                } 
+                else{
+                    printf("%sSignup successful! Now you can login with your username and password.%s\n", GREEN, RESET_COLOR);
                 }
                 break;
 
@@ -114,7 +116,7 @@ int main() {
                         show_user_menu(user_id);
                         scanf("%d", &user_choice);
                         getchar();
-                        if (user_choice == 8) {
+                        if (user_choice == 9) {
                             printf("%sLogging out...%s\n", RED, RESET_COLOR);
                             break;
                         }
@@ -124,6 +126,7 @@ int main() {
                                 break;
                             case 2:
                                 fetch_stock_details("US");
+                                break;
                             case 3: {
                                 char symbol[10];
                                 int quantity;
@@ -181,6 +184,12 @@ int main() {
                             }
                             case 7:
                                 view_leaderboard();
+                                break;
+                            case 8:
+                                view_user_details(user_id);
+                                // if (view_user_details(user_id) == 0) {
+                                //     // printf("Failed to fetch user details.\n");
+                                // }
                                 break;
                             default:
                                 printf("Invalid option. Please try again.\n");

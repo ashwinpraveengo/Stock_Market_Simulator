@@ -504,7 +504,7 @@ int view_leaderboard() {
     }
 
     printf("\n%s=== Leaderboard ===%s\n", CYAN, RESET_COLOR);
-    printf("%-5s %-20s %-20s %-20s\n", BOLD, "Rank", "Username", "Net Worth ($)", RESET_COLOR);
+    printf("%s%-4s   %-12s %-10s  %-12s%s\n", BOLD, "RANK", "USERNAME", "BALANCE", "NET WORTH", RESET_COLOR);
 
     int rank = 1;
     while (sqlite3_step(stmt) == SQLITE_ROW) {
@@ -512,10 +512,58 @@ int view_leaderboard() {
         double cash_balance = sqlite3_column_double(stmt, 1);
         double total_portfolio_value = sqlite3_column_double(stmt, 2);
 
-        printf("%-5d %-20s $%-19.2f $%-19.2f\n", rank++, username, cash_balance, total_portfolio_value);
+        printf("%-4d   %-12s $%-10.2f $%-12.2f\n", rank++, username, cash_balance, total_portfolio_value);
     }
 
     sqlite3_finalize(stmt);
     close_database(db);
     return 0;
 }
+
+int view_user_details(int user_id) {
+    sqlite3 *db = open_database();
+    if (!db) return 0;
+
+    const char *sql = 
+        "SELECT users.username, users.cash_balance, users.total_portfolio_value, "
+        "(users.cash_balance + users.total_portfolio_value) AS net_worth "
+        "FROM users WHERE users.id = ?";
+    sqlite3_stmt *stmt;
+
+    if (sqlite3_prepare_v2(db, sql, -1, &stmt, 0) != SQLITE_OK) {
+        fprintf(stderr, "Failed to prepare statement: %s\n", sqlite3_errmsg(db));
+        close_database(db);
+        return 0;
+    }
+
+    if (sqlite3_bind_int(stmt, 1, user_id) != SQLITE_OK) {
+        fprintf(stderr, "Failed to bind user ID: %s\n", sqlite3_errmsg(db));
+        sqlite3_finalize(stmt);
+        close_database(db);
+        return 0;
+    }
+
+    if (sqlite3_step(stmt) == SQLITE_ROW) {
+        const char *username = (const char *)sqlite3_column_text(stmt, 0);
+        double cash_balance = sqlite3_column_double(stmt, 1);
+        double total_portfolio_value = sqlite3_column_double(stmt, 2);
+        double net_worth = sqlite3_column_double(stmt, 3);
+
+        printf("\n-------------------------------------------\n");
+        printf("           User Details                   \n");
+        printf("-------------------------------------------\n");
+        printf(" Username               : %s\n", username);
+        printf(" Cash Balance           : $%.2f\n", cash_balance);
+        printf(" Total Portfolio Value  : $%.2f\n", total_portfolio_value);
+        printf(" Net Worth              : $%.2f\n", net_worth);
+        printf("-------------------------------------------\n\n");
+    } else {
+        printf("\nNo user found with the given ID: %d\n", user_id);
+    }
+
+    sqlite3_finalize(stmt);
+    close_database(db);
+
+    return 0;
+}
+
