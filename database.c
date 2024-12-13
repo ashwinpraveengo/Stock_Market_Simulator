@@ -504,7 +504,7 @@ int view_leaderboard() {
     }
 
     printf("\n%s=== Leaderboard ===%s\n", CYAN, RESET_COLOR);
-    printf("%-5s %-20s %-20s %-20s\n", BOLD, "Rank", "Username", "Net Worth ($)", RESET_COLOR);
+    printf("%s%-4s   %-12s %-10s  %-12s%s\n", BOLD, "RANK", "USERNAME", "BALANCE", "NET WORTH", RESET_COLOR);
 
     int rank = 1;
     while (sqlite3_step(stmt) == SQLITE_ROW) {
@@ -512,7 +512,7 @@ int view_leaderboard() {
         double cash_balance = sqlite3_column_double(stmt, 1);
         double total_portfolio_value = sqlite3_column_double(stmt, 2);
 
-        printf("%-5d %-20s $%-19.2f $%-19.2f\n", rank++, username, cash_balance, total_portfolio_value);
+        printf("%-4d   %-12s $%-10.2f $%-12.2f\n", rank++, username, cash_balance, total_portfolio_value);
     }
 
     sqlite3_finalize(stmt);

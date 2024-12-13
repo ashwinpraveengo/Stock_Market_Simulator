@@ -92,9 +92,10 @@ int main() {
                 }
 
                 if (signup(username, password) != 0) {
-                    printf("Signup failed. Username might already exist.\n");
-                } else {
-                    printf("Signup successful! You can now log in.\n");
+                    printf("%sSignup failed: Username '%s' is already taken. Please choose a different username.%s\n", RED, username, RESET_COLOR);
+                } 
+                else{
+                    printf("%sSignup successful! Now you can login with your username and password.%s\n", GREEN, RESET_COLOR);
                 }
                 break;
 
